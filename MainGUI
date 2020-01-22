@@ -1,4 +1,5 @@
 import tkinter as tk
+import sqlite3
 from tkinter import ttk
 from tkinter.messagebox import showinfo
 import datetime
@@ -6,13 +7,16 @@ from PIL import Image, ImageTk
 from SQLite import students
 from NamesLists import president_names, officer_names, es_faculty_names, sb_faculty_names, as_faculty_names
 from NamesLists import eh_faculty_names
-from Classes import PresidentVotes, GSUOfficerVotes, FacultyOfficerVotes
 from SQLiteQueries import president_main, faculty_main, officer_main
 
 # Creating global variables initially to check later that the user has not voted for a position twice
 globals()["presidential_votes"] = 0
 globals()["faculty_votes"] = 0
 globals()["officer_votes"] = 0
+
+# Connecting to voting database
+conn = sqlite3.connect("VotingDatabase3.db")
+c = conn.cursor()
 
 
 class MainWindow:
@@ -54,7 +58,7 @@ class MainWindow:
         """
         Functionality for user when they press vote on main page
         """
-        # Code below checks that voting is open
+        # Code below checks that voting is open in that specific days
         open_date = datetime.date.today()
         start_date = datetime.date(2019, 12, 7)
         end_date = datetime.date(2020, 1, 30)
@@ -96,10 +100,6 @@ class SecondWindow:
                                     fg="white", width="40", height=1, font=("Georgia", "18", "bold", "italic"))
         self.login_label.place(relx=0.50, rely=0.25, anchor="center")
 
-        # login buttons and functionality
-        # self.username_verify = tk.StringVar()
-        # self.password_verify = tk.StringVar()
-
         # Login buttons and Labels
         self.user_label = tk.Label(text="Username", width="15", height="1", bg="RoyalBlue4",
                                    fg="white", font=("Georgia", "10", "bold"))
@@ -122,9 +122,8 @@ class SecondWindow:
         self.login_entry.place(relx=0.60, rely=0.55, anchor="e")
 
     def check_user(self):
-        # todo create code in the for loop that checks that the user has not already voted, using the voting SQLite
-        #  tables. If they have voted then bring up a message saying they cannot vote again.
         self.valid_user = False
+        self.has_voted = False
         self.password_attempt = self.password_entry.get()
         self.username_attempt = self.user_entry.get()
 
@@ -137,17 +136,15 @@ class SecondWindow:
                     globals()["student_faculty"] = student.faculty
                     globals()["student_username"] = student.username
                 else:
-                    # todo change the not voting message so that it says please contact member of staff. Have as label?
                     self.valid_user = True
                     showinfo("Window", "Sorry {}, you are not registered to vote. "
                                        "Please contact the GSU to request permission to vote".format(student.forename))
         if not self.valid_user:
             self.password_entry.delete(0, "end")
             self.user_entry.delete(0, "end")
-            showinfo("Incorrect Details", "Incorrect password or username. Please try again")
+            showinfo("Incorrect Details", "Incorrect password or username. Please try again.")
 
     def new_window(self):
-        # todo possibly print success message to let user know that login passed
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
@@ -190,9 +187,8 @@ class ThirdWindow:
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
-        # todo possibly create a new separate window/class to thank the user for voting and if another user wants
-        #  to vote then they need to restart the program. Otherwise a student cannot vote correctly
-        self.logout_window = SecondWindow(self.master)
+
+        self.signout_window = SignOutWindow(self.master)
 
     def vote_president(self):
         global presidential_votes
@@ -224,6 +220,7 @@ class ThirdWindow:
             self.list = root.place_slaves()
             for l in self.list:
                 l.destroy()
+
             # Code checks what faculty the user is in and then takes them to the correct page
             global student_faculty
             if student_faculty == "EH":
@@ -236,6 +233,40 @@ class ThirdWindow:
                 self.sb_faculty_window = FacultyWindowSB(self.master)
         else:
             showinfo("window", "You cannot vote for this position again. Please try another position")
+
+
+class SignOutWindow:
+
+    def __init__(self, master):
+        self.master = master
+
+        self.thank_you = tk.Label(text="Thank you!", bg="white",
+                                     fg="black", width="40", height=1, font=("Georgia", "32", "bold", "italic"))
+        self.thank_you.place(relx=0.5, rely=0.10, anchor="center")
+        self.label = tk.Label(text="For entering the GSU Voting System",
+                              bg="white",
+                              fg="black", width="40", height=1, font=("Georgia", "32", "bold", "italic"))
+        self.label.place(relx=0.5, rely=0.17, anchor="center")
+        self.info_label = tk.Label(text="If you are another student who would like to vote,",
+                                   bg="white",
+                                   fg="black", width="50", height="1",
+                                   font=("Georgia", "20", "bold", "italic"))
+        self.info_label.place(relx=0.5, rely=0.44, anchor="center")
+        self.info_label_two = tk.Label(text="please close this program and login again to vote correctly.",
+                                       bg="white",
+                                       fg="black", width="50", height="1",
+                                       font=("Georgia", "20", "bold", "italic"))
+        self.info_label_two.place(relx=0.5, rely=0.485, anchor="center")
+        self.quit_button = tk.Button(text="Quit", font=("Gill Sans MT", "12", "bold"), height="2", width=15, command=self.close_window)
+        self.quit_button.place(relx=0.5, rely=0.65, anchor="center")
+        # logo GSU
+        self.logo4 = Image.open("logogsu.png")
+        self.logorender4 = ImageTk.PhotoImage(self.logo4)
+        self.main_label2 = tk.Label(image=self.logorender4)
+        self.main_label2.place(relx=0.85, rely=0.90, anchor="center")
+
+    def close_window(self):
+        self.master.destroy()
 
 
 class PresidentWindow:
@@ -319,8 +350,6 @@ class PresidentWindow:
                     self.second_box.get() != self.fourth_box.get() and self.third_box.get() != self.fourth_box.get()):
                 self.msgbox = tk.messagebox.askquestion("Save & Exit", "Please confirm you are happy with your choices")
                 if self.msgbox == "yes":
-                    # todo create functionality to show that the input has been saved
-                    # todo review notes from to do list about creating a variable to check what user has voted for
                     globals()["presidential_votes"] = 1
                     # SQLite Query that saves choices straight into relevant table
                     president_main(username=student_username, first_pref=self.first_choice,
@@ -433,7 +462,6 @@ class PresidentWindow:
         # Incorrect voting
         else:
             showinfo("Incorrect Input", "You have voted incorrectly please try again")
-            # todo enter a message in box that reminds the user how to vote correctly i.e the rules
 
     def go_back(self):
         self.list = root.place_slaves()
@@ -531,8 +559,6 @@ class FacultyWindowEH:
                     self.second_box.get() != self.fourth_box.get() and self.third_box.get() != self.fourth_box.get()):
                 self.msgbox = tk.messagebox.askquestion("Save & Exit", "Please confirm you are happy with your choices")
                 if self.msgbox == "yes":
-                    # todo create functionality to show that the input has been saved
-                    # todo review notes from to do list about creating a variable to check what user has voted for
                     globals()["faculty_votes"] = 1
                     # SQLite Query that saves choices straight into relevant table
                     faculty_main(faculty="EH", username=student_username, first_pref=self.first_choice,
@@ -646,7 +672,6 @@ class FacultyWindowEH:
         # Incorrect voting
         else:
             showinfo("Incorrect Input", "You have voted incorrectly please try again")
-            # todo enter a message in box that reminds the user how to vote correctly i.e the rules
 
     def go_back(self):
         self.list = root.place_slaves()
@@ -739,8 +764,6 @@ class FacultyWindowES:
                     self.second_box.get() != self.fourth_box.get() and self.third_box.get() != self.fourth_box.get()):
                 self.msgbox = tk.messagebox.askquestion("Save & Exit", "Please confirm you are happy with your choices")
                 if self.msgbox == "yes":
-                    # todo create functionality to show that the input has been saved
-                    # todo review notes from to do list about creating a variable to check what user has voted for
                     globals()["faculty_votes"] = 1
                     # SQLite Query that saves choices straight into relevant table
                     faculty_main(faculty="ES", username=student_username, first_pref=self.first_choice,
@@ -854,7 +877,6 @@ class FacultyWindowES:
         # Incorrect voting
         else:
             showinfo("Incorrect Input", "You have voted incorrectly please try again")
-            # todo enter a message in box that reminds the user how to vote correctly i.e the rules
 
     def go_back(self):
         self.list = root.place_slaves()
@@ -948,8 +970,6 @@ class FacultyWindowAS:
                     self.second_box.get() != self.fourth_box.get() and self.third_box.get() != self.fourth_box.get()):
                 self.msgbox = tk.messagebox.askquestion("Save & Exit", "Please confirm you are happy with your choices")
                 if self.msgbox == "yes":
-                    # todo create functionality to show that the input has been saved
-                    # todo review notes from to do list about creating a variable to check what user has voted for
                     globals()["faculty_votes"] = 1
                     # SQLite Query that saves choices straight into relevant table
                     faculty_main(faculty="AS", username=student_username, first_pref=self.first_choice,
@@ -1063,7 +1083,6 @@ class FacultyWindowAS:
         # Incorrect voting
         else:
             showinfo("Incorrect Input", "You have voted incorrectly please try again")
-            # todo enter a message in box that reminds the user how to vote correctly i.e the rules
 
     def go_back(self):
         self.list = root.place_slaves()
@@ -1157,8 +1176,6 @@ class FacultyWindowSB:
                     self.second_box.get() != self.fourth_box.get() and self.third_box.get() != self.fourth_box.get()):
                 self.msgbox = tk.messagebox.askquestion("Save & Exit", "Please confirm you are happy with your choices")
                 if self.msgbox == "yes":
-                    # todo create functionality to show that the input has been saved
-                    # todo review notes from to do list about creating a variable to check what user has voted for
                     globals()["faculty_votes"] = 1
                     # SQLite Query that saves choices straight into relevant table
                     faculty_main(faculty="SB", username=student_username, first_pref=self.first_choice,
@@ -1272,7 +1289,6 @@ class FacultyWindowSB:
         # Incorrect voting
         else:
             showinfo("Incorrect Input", "You have voted incorrectly please try again")
-            # todo enter a message in box that reminds the user how to vote correctly i.e the rules
 
     def go_back(self):
         self.list = root.place_slaves()
@@ -1363,8 +1379,6 @@ class OfficerWindow:
                     self.second_box.get() != self.fourth_box.get() and self.third_box.get() != self.fourth_box.get()):
                 self.msgbox = tk.messagebox.askquestion("Save & Exit", "Please confirm you are happy with your choices")
                 if self.msgbox == "yes":
-                    # todo create functionality to show that the input has been saved
-                    # todo review notes from to do list about creating a variable to check what user has voted for
                     globals()["officer_votes"] = 1
                     # SQLite Query that saves choices straight into relevant table
                     officer_main(username=student_username, first_pref=self.first_choice,
@@ -1476,8 +1490,7 @@ class OfficerWindow:
         # Incorrect voting
         else:
             showinfo("Incorrect Input", "You have voted incorrectly please try again")
-            # todo enter a message in box that reminds the user how to vote correctly i.e the rules
-
+            
     def go_back(self):
         self.list = root.place_slaves()
         for l in self.list:
