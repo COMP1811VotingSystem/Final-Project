@@ -273,11 +273,168 @@ count_faculty("ThirdPreference", faculty_results,
 count_faculty("FourthPreference", faculty_results,
               "fourth", as_faculty_names)
 
-# The below for loops print out the results from the voting. Change where necessary
+# The below for loops print out the results from the voting.
+# PRESIDENT PART
+# In this part we create a txt file for all the candidates president with their respective votes
+list_president_votes = []
+with open("PresidentResults", "w") as TXTPresident:
+    TXTPresident.write("------------------------------------------------------------------------------" + "\n")
+    TXTPresident.write(" Position: GSU President" + "\n")
+    TXTPresident.write("------------------------------------------------------------------------------" + "\n")
+    TXTPresident.write("  Candidate   " + "  1st Preference " + " 2nd Preference " + " 3rd Preference " + " 4th Preference " + "\n")
+    TXTPresident.write("  ---------     --------------  --------------  --------------  --------------" + "\n")
+    for x in president_results:
+        TXTPresident.write(
+            x.full_name + "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                x.fourth) + ")" + "\n")
+        # create a list where we append just the vote so we can sort them
+        list_president_votes.append(
+            "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                x.fourth) + ")")
+list_president_votes.sort(reverse=True)
+# we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
+data = (list_president_votes[0])
+fk_winner_president = ""
+pk_winner_president = []
+with open("PresidentResults", "r") as full_president_detail:
+    for line in full_president_detail:
+        if data in line:
+            fk_winner_president = line
+            pk_winner_president.append(fk_winner_president)
+full_president_detail.close()
 
-for x in officer_results:
-    print(x.full_name + " " + str(x.first) + " " + str(x.second) + " " + str(x.third) + " " + str(x.fourth))
 
-"""for x in faculty_results:
-    if x.faculty == "SB":
-        print(x.full_name + " " + str(x.first) + " " + str(x.second) + " " + str(x.third) + " " + str(x.fourth))"""
+# OFFICERS PART
+# In this part we create a txt file for all the candidates officer with their respective votes
+list_officers_votes = []
+with open("OfficersResults", "w") as TXTOfficers:
+    TXTOfficers.write("Name " + "Surname " + " First " + " Second " + " Third " + " Fourth " + "\n")
+    for x in officer_results:
+        TXTOfficers.write(
+            x.full_name + "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                x.fourth) + ")" + "\n")
+        # create a list where we append just the votes so we can sort them
+        list_officers_votes.append(
+            "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                x.fourth) + ")")
+list_officers_votes.sort(reverse=True)
+# we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
+data = (list_officers_votes[0])
+fk_winner_officer = ""
+with open("OfficersResults", "r") as full_officers_detail:
+    for line in full_officers_detail:
+        if data in line:
+            fk_winner_officer = line
+full_officers_detail.close()
+
+# In this part we create a txt file for all the candidates for each faculty with their respective votes
+# FACULTY SB PART
+list_faculty1_votes = []
+with open("FacultySBResults", "w") as TXTFacultySB:
+    TXTFacultySB.write("Faculty: School of Business" + "\n")
+    TXTFacultySB.write("Name " + "Surname " + " First " + " Second " + " Third " + " Fourth " + "\n")
+    for x in faculty_results:
+        if x.faculty == "SB":
+            TXTFacultySB.write(
+                x.full_name + "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                    x.fourth) + ")" + "\n")
+            # create a list where we append just the votes so we can sort them
+            list_faculty1_votes.append(
+                "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                    x.fourth) + ")")
+
+list_faculty1_votes.sort(reverse=True)
+# we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
+data = (list_faculty1_votes[0])
+fk_winner_facultySB = ""
+with open("FacultySBResults", "r") as full_facultySB_detail:
+    for line in full_facultySB_detail:
+        if data in line:
+            fk_winner_facultySB = line
+full_facultySB_detail.close()
+
+# FACULTY ES PART
+list_faculty2_votes = []
+with open("FacultyESResults", "w") as TXTFacultyES:
+    TXTFacultyES.write("Faculty: Faculty of Engineering and Science" + "\n")
+    TXTFacultyES.write("Name " + "Surname " + " First " + " Second " + " Third " + " Fourth " + "\n")
+    for x in faculty_results:
+        if x.faculty == "ES":
+            TXTFacultyES.write(
+                x.full_name + "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                    x.fourth) + ")" + "\n")
+            # create a list where we append just the votes so we can sort them
+            list_faculty2_votes.append(
+                "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                    x.fourth) + ")")
+
+list_faculty2_votes.sort(reverse=True)
+# we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
+data = (list_faculty2_votes[0])
+fk_winner_facultyES = ""
+with open("FacultyESResults", "r") as full_facultyES_detail:
+    for line in full_facultyES_detail:
+        if data in line:
+            fk_winner_facultyES = line
+full_facultyES_detail.close()
+
+# FACULTY EH PART
+list_faculty3_votes = []
+with open("FacultyEHResults", "w") as TXTFacultyEH:
+    TXTFacultyEH.write("Faculty: Faculty of Education" + "\n")
+    TXTFacultyEH.write("Name " + "Surname " + " First " + " Second " + " Third " + " Fourth " + "\n")
+    for x in faculty_results:
+        if x.faculty == "EH":
+            TXTFacultyEH.write(
+                x.full_name + "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                    x.fourth) + ")" + "\n")
+            # create a list where we append just the votes so we can sort them
+            list_faculty3_votes.append(
+                "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                    x.fourth) + ")")
+
+list_faculty3_votes.sort(reverse=True)
+# we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
+data = (list_faculty3_votes[0])
+fk_winner_facultyEH = ""
+with open("FacultyEHResults", "r") as full_facultyEH_detail:
+    for line in full_facultyEH_detail:
+        if data in line:
+            fk_winner_facultyEH = line
+full_facultyEH_detail.close()
+
+# FACULTY AS PART
+list_faculty4_votes = []
+with open("FacultyASResults", "w") as TXTFacultyAS:
+    TXTFacultyAS.write("Faculty: Faculty of Liberal Arts and Sciences" + "\n")
+    TXTFacultyAS.write("Name " + "Surname " + " First " + " Second " + " Third " + " Fourth " + "\n")
+    for x in faculty_results:
+        if x.faculty == "AS":
+            TXTFacultyAS.write(
+                x.full_name + "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                    x.fourth) + ")" + "\n")
+            # create a list where we append just the votes so we can sort them
+            list_faculty4_votes.append(
+                "(" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
+                    x.fourth) + ")")
+
+list_faculty4_votes.sort(reverse=True)
+# we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
+data = (list_faculty4_votes[0])
+fk_winner_facultyAS = ""
+with open("FacultyASResults", "r") as full_facultyAS_detail:
+    for line in full_facultyAS_detail:
+        if data in line:
+            fk_winner_facultyAS = line
+full_facultyAS_detail.close()
+
+# here we write the winners in a specific txt file
+with open("WINNERS", "w") as Winners:
+    Winners.write(
+        "GSU President's Winner: " + "\n" + fk_winner_president + "\n" + "\n" + "GSU Officers's Winner: " + "\n" +
+        fk_winner_officer + "\n" + "\n" + "GSU School of Business Faculty's Winner: " + "\n" + fk_winner_facultySB +
+        "\n" + "\n" + "GSU Faculty of Engineering and Science Faculty's Winner: " + "\n" + fk_winner_facultyES + "\n" + "\n"
+        + "GSU Faculty of Education's Winner: " + "\n" + fk_winner_facultyEH + "\n" + "\n"
+        + "GSU Faculty of Liberal Arts and Sciences's Winner: " + "\n" + fk_winner_facultyAS + "\n" + "\n")
+
+Winners.close()
