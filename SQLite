@@ -4,7 +4,7 @@ from Classes import Student, Candidate
 # Setting up sqlite3 - using ':memory:' instead of a database means you can run the code as many times as you want
 # without receiving any errors. Once all code has been completed, a database can then be created to save all data
 
-conn = sqlite3.connect("VotingDatabase3.db")
+conn = sqlite3.connect("VotingDatabase.db")
 c = conn.cursor()
 
 c.execute("""CREATE TABLE IF NOT EXISTS Student ( 
