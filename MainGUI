@@ -15,8 +15,11 @@ globals()["faculty_votes"] = 0
 globals()["officer_votes"] = 0
 
 # Connecting to voting database
-conn = sqlite3.connect("VotingDatabase3.db")
+conn = sqlite3.connect("VotingDatabase.db")
 c = conn.cursor()
+
+# Creating List of student usernames
+student_usernames = []
 
 
 class MainWindow:
@@ -60,7 +63,7 @@ class MainWindow:
         """
         # Code below checks that voting is open in that specific days
         open_date = datetime.date.today()
-        start_date = datetime.date(2019, 12, 7)
+        start_date = datetime.date(2020, 1, 20)
         end_date = datetime.date(2020, 1, 30)
 
         if start_date <= open_date <= end_date:
@@ -1490,7 +1493,7 @@ class OfficerWindow:
         # Incorrect voting
         else:
             showinfo("Incorrect Input", "You have voted incorrectly please try again")
-            
+
     def go_back(self):
         self.list = root.place_slaves()
         for l in self.list:
