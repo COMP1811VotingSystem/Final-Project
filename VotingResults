@@ -332,24 +332,33 @@ with open("OfficersResults", "w") as TXTOfficers:
                 x.fourth))
     TXTOfficers.write("------------------------------------------------------------------------------" + "\n")
 list_officers_votes.sort(reverse=True)
-# we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
-data = (list_officers_votes[0])
+# we are giving the first 3 index of the previews list to a variable and we check if these variables are in the txt file with all the votes
+data0 = (list_officers_votes[0]) #first winner votes
+data1 = (list_officers_votes[1]) #second winner votes
+data2 = (list_officers_votes[2]) #third winner votes
 fk_winner_officer = ""
 pk_winner_officer = []
+#creating a list that contain all the details of the winners
 with open("OfficersResults", "r") as full_officers_detail:
     for line in full_officers_detail:
-        if data in line:
+        if data0 in line:
             fk_winner_officer = line
-            pk_winner_officer.append(fk_winner_officer)
+            pk_winner_officer.insert(0, fk_winner_officer)
+        if data1 in line:
+            fk_winner_officer = line
+            pk_winner_officer.insert(1, fk_winner_officer)
+        if data2 in line:
+            fk_winner_officer = line
+            pk_winner_officer.insert(2, fk_winner_officer)
+
 full_officers_detail.close()
 # taking just the full name
-newList = []
+newList1 = []
 for i in pk_winner_officer:
-    newList.append(i.split(':')[0])
+    newList1.append(i.split(':')[0])
 # appending the winner
 with open("OfficersResults", "a+") as OfficerWinner:
-    OfficerWinner.write("\n" + "Winner: " + newList[0] + "\n")
-
+    OfficerWinner.write("\n" + "Winners are: " + newList1[0] + ", " + newList1[1] + ", " + newList1[2] + "\n")
 # In this part we create a txt file for all the candidates for each faculty with their respective votes
 # FACULTY SB PART
 list_faculty1_votes = []
@@ -373,22 +382,35 @@ with open("FacultySBResults", "w") as TXTFacultySB:
 list_faculty1_votes.sort(reverse=True)
 
 # we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
-data = (list_faculty1_votes[0])
+data0 = (list_faculty1_votes[0])
+data1 = (list_faculty1_votes[1])
+data2 = (list_faculty1_votes[2])
+data3 = (list_faculty1_votes[3])
 fk_winner_facultySB = ""
 pk_winner_facultySB = []
 with open("FacultySBResults", "r") as full_facultySB_detail:
     for line in full_facultySB_detail:
-        if data in line:
+        if data0 in line:
             fk_winner_facultySB = line
-            pk_winner_facultySB.append(fk_winner_facultySB)
+            pk_winner_facultySB.insert(0, fk_winner_facultySB)
+        if data1 in line:
+            fk_winner_facultySB = line
+            pk_winner_facultySB.insert(1, fk_winner_facultySB)
+        if data2 in line:
+            fk_winner_facultySB = line
+            pk_winner_facultySB.insert(2, fk_winner_facultySB)
+        if data3 in line:
+            fk_winner_facultySB = line
+            pk_winner_facultySB.insert(3, fk_winner_facultySB)
+
 full_facultySB_detail.close()
 # taking just the full name
-newList = []
+newList2 = []
 for i in pk_winner_facultySB:
-    newList.append(i.split(':')[0])
+    newList2.append(i.split(':')[0])
 # appending the winner
 with open("FacultySBResults", "a+") as FacultySBWinner:
-    FacultySBWinner.write("\n" + "Winner: " + newList[0] + "\n")
+    FacultySBWinner.write("\n" + "Winner: " + newList2[0] + ", " + newList2[1] + ", " + newList2[2] + ", " + newList2[3] + "\n")
 
 
 # FACULTY ES PART
@@ -412,23 +434,35 @@ with open("FacultyESResults", "w") as TXTFacultyES:
 
 list_faculty2_votes.sort(reverse=True)
 # we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
-data = (list_faculty2_votes[0])
+data0 = (list_faculty2_votes[0])
+data1 = (list_faculty2_votes[1])
+data2 = (list_faculty2_votes[2])
+data3 = (list_faculty2_votes[3])
 fk_winner_facultyES = ""
 pk_winner_facultyES = []
 with open("FacultyESResults", "r") as full_facultyES_detail:
     for line in full_facultyES_detail:
-        if data in line:
+        if data0 in line:
             fk_winner_facultyES = line
-            pk_winner_facultyES.append(fk_winner_facultyES)
+            pk_winner_facultyES.insert(0, fk_winner_facultyES)
+        if data1 in line:
+            fk_winner_facultyES = line
+            pk_winner_facultyES.insert(1, fk_winner_facultyES)
+        if data2 in line:
+            fk_winner_facultyES = line
+            pk_winner_facultyES.insert(2, fk_winner_facultyES)
+        if data3 in line:
+            fk_winner_facultyES = line
+            pk_winner_facultyES.insert(3, fk_winner_facultyES)
 full_facultyES_detail.close()
 
 # taking just the full name
-newList = []
+newList3 = []
 for i in pk_winner_facultyES:
-    newList.append(i.split(':')[0])
+    newList3.append(i.split(':')[0])
 # appending the winner
 with open("FacultyESResults", "a+") as FacultyESWinner:
-    FacultyESWinner.write("\n" + "Winner: " + newList[0] + "\n")
+    FacultyESWinner.write("\n" + "Winner: " + newList3[0] + ", " + newList3[1] + ", " + newList3[2] + ", " + newList3[3] + "\n")
 
 # FACULTY EH PART
 list_faculty3_votes = []
@@ -451,23 +485,35 @@ with open("FacultyEHResults", "w") as TXTFacultyEH:
 
 list_faculty3_votes.sort(reverse=True)
 # we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
-data = (list_faculty3_votes[0])
+data0 = (list_faculty3_votes[0])
+data1 = (list_faculty3_votes[1])
+data2 = (list_faculty3_votes[2])
+data3 = (list_faculty3_votes[3])
 fk_winner_facultyEH = ""
 pk_winner_facultyEH = []
 with open("FacultyEHResults", "r") as full_facultyEH_detail:
     for line in full_facultyEH_detail:
-        if data in line:
+        if data0 in line:
             fk_winner_facultyEH = line
-            pk_winner_facultyEH.append(fk_winner_facultyEH)
+            pk_winner_facultyEH.insert(0, fk_winner_facultyEH)
+        if data1 in line:
+            fk_winner_facultyEH = line
+            pk_winner_facultyEH.insert(1, fk_winner_facultyEH)
+        if data2 in line:
+            fk_winner_facultyEH = line
+            pk_winner_facultyEH.insert(2, fk_winner_facultyEH)
+        if data3 in line:
+            fk_winner_facultyEH = line
+            pk_winner_facultyEH.insert(3, fk_winner_facultyEH)
 full_facultyEH_detail.close()
 
 # taking just the full name
-newList = []
+newList4 = []
 for i in pk_winner_facultyEH:
-    newList.append(i.split(':')[0])
+    newList4.append(i.split(':')[0])
 # appending the winner
 with open("FacultyEHResults", "a+") as FacultyEHWinner:
-    FacultyEHWinner.write("\n" + "Winner: " + newList[0] + "\n")
+    FacultyEHWinner.write("\n" + "Winner: " + newList4[0] + ", " + newList4[1] + ", " + newList4[2] + ", " + newList4[3] + "\n")
 
 
 # FACULTY AS PART
@@ -491,22 +537,34 @@ with open("FacultyASResults", "w") as TXTFacultyAS:
 
 list_faculty4_votes.sort(reverse=True)
 # we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
-data = (list_faculty4_votes[0])
+data0 = (list_faculty4_votes[0])
+data1 = (list_faculty4_votes[1])
+data2 = (list_faculty4_votes[2])
+data3 = (list_faculty4_votes[3])
 fk_winner_facultyAS = ""
 pk_winner_facultyAS = []
 with open("FacultyASResults", "r") as full_facultyAS_detail:
     for line in full_facultyAS_detail:
-        if data in line:
+        if data0 in line:
             fk_winner_facultyAS = line
-            pk_winner_facultyAS.append(fk_winner_facultyAS)
+            pk_winner_facultyAS.insert(0, fk_winner_facultyAS)
+        if data1 in line:
+            fk_winner_facultyAS = line
+            pk_winner_facultyAS.insert(1, fk_winner_facultyAS)
+        if data2 in line:
+            fk_winner_facultyAS = line
+            pk_winner_facultyAS.insert(2, fk_winner_facultyAS)
+        if data3 in line:
+            fk_winner_facultyAS = line
+            pk_winner_facultyAS.insert(3, fk_winner_facultyAS)
 full_facultyAS_detail.close()
 
 # taking just the full name
-newList = []
+newList5 = []
 for i in pk_winner_facultyAS:
-    newList.append(i.split(':')[0])
+    newList5.append(i.split(':')[0])
 # appending the winner
 with open("FacultyASResults", "a+") as FacultyASWinner:
-    FacultyASWinner.write("\n" + "Winner: " + newList[0] + "\n")
+    FacultyASWinner.write("\n" + "Winner: " + newList5[0] + ", " + newList5[1] + ", " + newList5[2] + ", " + newList5[3] + "\n")
 
 
