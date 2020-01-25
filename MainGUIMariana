@@ -49,15 +49,25 @@ class MainWindow:
                                    font=("Georgia", "45", "bold", "italic"))
         self.main_label.place(relx=0.5, rely=0.30, anchor="center")
 
-        self.vote_button = tk.Button(text="Vote", font=("Georgia", "12", "bold"), height="2", width=20,
+        self.vote_button = tk.Button(text="Vote", font=("Gill Sans MT", "12", "bold"), height="2", width=20,
                                      background="lightsteelblue", foreground="black", bd="4", relief="raised",
                                      command=self.vote)
         self.vote_button.place(relx=0.146, rely=0.75, anchor="sw")
 
-        self.quit_button = tk.Button(text="Quit", font=("Georgia", "12", "bold"), height="2", width=20,
+        self.quit_button = tk.Button(text="Quit", font=("Gill Sans MT", "12", "bold"), height="2", width=20,
                                      background="lightsteelblue", foreground="black", bd="4", relief="raised",
                                      command=self.close_window)
         self.quit_button.place(relx=0.58, rely=0.75, anchor="sw")
+
+        self.results_button = tk.Button(text="Results", font=("Gill Sans MT", "12", "bold"), height="2", width=20,
+                                        command=self.visualise_results)
+        self.results_button.place(relx=0.44, rely=0.80, anchor="center")
+
+    def visualise_results(self):
+        self.list = root.place_slaves()
+        for l in self.list:
+            l.destroy()
+        self.results_window = ResultsWindow(self.master)
 
     def vote(self):
         """
@@ -205,12 +215,6 @@ class ThirdWindow:
                                         width=20, command=self.vote_faculty)
         self.faculty_button.place(relx=0.80, rely=0.70, anchor="center")
 
-        self.results_label = tk.Label(text="Or visualise the results here:",bg='MistyRose2',
-                                     fg="black", width="25", height=1, font=("Gill Sans MT", "20", "bold"))
-        self.results_label.place(relx=0.3, rely=0.80, anchor="center")
-        self.results_button = tk.Button(text="Results", font=("Gill Sans MT", "12", "bold"), height="2", width=10,command=self.visualise_results)
-        self.results_button.place(relx=0.70, rely=0.80, anchor="center")
-
         self.back_button = tk.Button(text="Sign Out", font=("Gill Sans MT", "12", "bold"), height="1", width="20",
                                      command=self.go_back)
         self.back_button.place(relx=0.5, rely=0.90, anchor="center")
@@ -266,11 +270,6 @@ class ThirdWindow:
         else:
             showinfo("window", "You cannot vote for this position again. Please try another position")
 
-    def visualise_results(self):
-        self.list = root.place_slaves()
-        for l in self.list:
-            l.destroy()
-        self.results_window = ResultsWindow(self.master)
 
 class SignOutWindow:
 
@@ -1557,7 +1556,7 @@ class ResultsWindow:
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
-        self.third_window = ThirdWindow(self.master)
+        self.main_window = MainWindow(self.master)
 
     def results_position(self):
         self.position_selected= self.position.get()
@@ -1591,6 +1590,11 @@ class ResultsWindow:
             for l in self.list:
                 l.destroy()
             self.results_SBfacultyofficer = ResultsSBFacultyWindow(self.master)
+        elif self.position_selected == 'All GSU Positions':
+            self.list = root.place_slaves()
+            for l in self.list:
+                l.destroy()
+            self.results_allGSU = ResultsSummaryWindow(self.master)
 
 class ResultsPresidentW:
     def __init__(self,master):
@@ -1600,6 +1604,7 @@ class ResultsPresidentW:
         self.firstlabel.place(relx=0.5, rely=0.15, anchor='center')
         self.secondlabel=tk.Label(text= "President", width="30", fg="white",bg="#252850", font=("Century Gothic", "40","bold","italic","underline"))
         self.secondlabel.place(relx=0.5, rely=0.30, anchor='center')
+        #Using Listbox to display the candidate results from the list president_results
         self.candidatelist= Listbox(master,width=32,height=6,bg="white",fg="#252850", font=("Century Gothic", "20"))
         self.candidatelist.place(relx=0.30,rely=0.54,anchor='center')
         #self.candidatelist.insert(END, "    Candidate  :    1stP    -    2ndP    -    3rdP    -    4thP")
@@ -1612,8 +1617,8 @@ class ResultsPresidentW:
         self.winner.place(relx=0.70,rely=0.50,anchor='center')
         self.winnername=tk.Label(text="Winner: %s" % newList[0],fg="#252850",bg="#FFC0CB",font=("Century Gothic", "22","bold"))
         self.winnername.place(relx=0.70, rely=0.55, anchor='center')
-        t = 0
-        w=0
+        t = 0 #initialising counter for the total president votes
+        w=0 #initialising counter for the votes the winner received
         c.execute("SELECT FirstPreference from PresidentVotes")
         for row in c:
             t+=1
@@ -1624,7 +1629,7 @@ class ResultsPresidentW:
         self.voteswinner = tk.Label(text="Votes the winner received: %d" % w, width="25", fg="white", bg="#252850",
                                    font=("Century Gothic", "19"))
         self.voteswinner.place(relx=0.5, rely=0.80, anchor='center')
-        p=(w*100)/t
+        p=(w*100)/t #formula for the percentage
         self.percentage = tk.Label(text="Percentage of votes received by the winner: %d" % p, width="45", fg="white", bg="#252850",
                                     font=("Century Gothic", "19"))
         self.percentage.place(relx=0.5, rely=0.85, anchor='center')
@@ -1636,7 +1641,7 @@ class ResultsPresidentW:
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
-        self.third_window = ResultsWindow(self.master)
+        self.results_window = ResultsWindow(self.master)
 
 class ResultsGSUW:
     def __init__(self,master):
@@ -1657,7 +1662,7 @@ class ResultsGSUW:
         self.winner=tk.Label(text="GSU Officers 2020: ", width=22, fg="#252850",bg="#FFC0CB", font=("Century Gothic", "16"))
         self.winner.place(relx=0.70,rely=0.50,anchor='center')
         #Depends on the votes
-        self.winnername=tk.Label(text="Winners: %s" % newList1[0] + "\n %s" % newList1[1],fg="#252850",bg="#FFC0CB",width=22,font=("Century Gothic", "18","bold"))
+        self.winnername=tk.Label(text="Winners: %s" % newList1[0] + "\n %s" % newList1[1]  + "\n %s" % newList1[2],fg="#252850",bg="#FFC0CB",width=22,font=("Century Gothic", "18","bold"))
         self.winnername.place(relx=0.70, rely=0.55, anchor='center')
         t = 0
         w=0
@@ -1683,7 +1688,7 @@ class ResultsGSUW:
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
-        self.third_window = ResultsWindow(self.master)
+        self.results_window = ResultsWindow(self.master)
 
 class ResultsASFacultyWindow:
     def __init__(self,master):
@@ -1708,8 +1713,9 @@ class ResultsASFacultyWindow:
                              font=("Century Gothic", "16"))
         self.winner.place(relx=0.70,rely=0.50,anchor='center')
         #Depends on the votes
-        self.winnername=tk.Label(text="Winners: %s" % newList5[0] + "\n %s" % newList5[1],fg="#252850",bg="#FFC0CB",
-                                 width="22",font=("Century Gothic", "18","bold"))
+        self.winnername=tk.Label(text="Winners: %s" % newList5[0] + "\n %s" % newList5[1] + "\n %s" % newList5[2] +
+                                      "\n %s" % newList5[3],fg="#252850",bg="#FFC0CB",width="22",
+                                    font=("Century Gothic", "18","bold"))
         self.winnername.place(relx=0.70, rely=0.55, anchor='center')
         t = 0
         w=0
@@ -1739,7 +1745,7 @@ class ResultsASFacultyWindow:
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
-        self.third_window = ResultsWindow(self.master)
+        self.results_window = ResultsWindow(self.master)
 
 class ResultsEHFacultyWindow:
     def __init__(self,master):
@@ -1761,7 +1767,9 @@ class ResultsEHFacultyWindow:
         self.winner=tk.Label(text="Faculty of Education Officers 2020: ", width="22", fg="#252850",bg="#FFC0CB", font=("Century Gothic", "16"))
         self.winner.place(relx=0.70,rely=0.50,anchor='center')
         #Depends on the votes
-        self.winnername=tk.Label(text="Winners: %s" % newList4[0] + "\n %s" % newList4[1],fg="#252850",bg="#FFC0CB",width="22",font=("Century Gothic", "18","bold"))
+        self.winnername=tk.Label(text="Winners: %s" % newList4[0] + "\n %s" % newList4[1] + "\n %s" % newList4[2] +
+                                      "\n %s" % newList4[3],fg="#252850",bg="#FFC0CB",width="22",
+                                    font=("Century Gothic", "18","bold"))
         self.winnername.place(relx=0.70, rely=0.55, anchor='center')
         t = 0
         w=0
@@ -1790,7 +1798,7 @@ class ResultsEHFacultyWindow:
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
-        self.third_window = ResultsWindow(self.master)
+        self.results_window = ResultsWindow(self.master)
 
 class ResultsESFacultyWindow:
     def __init__(self,master):
@@ -1812,7 +1820,9 @@ class ResultsESFacultyWindow:
         self.winner=tk.Label(text="ES Faculty Officers 2020: ", width="22", fg="#252850",bg="#FFC0CB", font=("Century Gothic", "16"))
         self.winner.place(relx=0.70,rely=0.50,anchor='center')
         #Depends on the votes
-        self.winnername=tk.Label(text="Winners: %s" % newList3[0] + "\n %s" % newList3[1],fg="#252850",bg="#FFC0CB",width="22",font=("Century Gothic", "18","bold"))
+        self.winnername=tk.Label(text="Winners: %s" % newList3[0] + "\n %s" % newList3[1] + "\n %s" % newList3[2] +
+                                      "\n %s" % newList3[3],fg="#252850",bg="#FFC0CB",width="22",
+                                    font=("Century Gothic", "18","bold"))
         self.winnername.place(relx=0.70, rely=0.55, anchor='center')
         t = 0
         w=0
@@ -1841,7 +1851,7 @@ class ResultsESFacultyWindow:
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
-        self.third_window = ResultsWindow(self.master)
+        self.results_window = ResultsWindow(self.master)
 
 class ResultsSBFacultyWindow:
     def __init__(self,master):
@@ -1863,7 +1873,9 @@ class ResultsSBFacultyWindow:
         self.winner=tk.Label(text="SB Faculty Officers 2020: ", width="22", fg="#252850",bg="#FFC0CB", font=("Century Gothic", "16"))
         self.winner.place(relx=0.70,rely=0.50,anchor='center')
         #Depends on the votes
-        self.winnername=tk.Label(text="Winners: %s" % newList2[0] + "\n %s" % newList2[1],fg="#252850",bg="#FFC0CB",width="22",font=("Century Gothic", "18","bold"))
+        self.winnername=tk.Label(text="Winners: %s" % newList2[0] + "\n %s" % newList2[1] + "\n %s" % newList2[2] +
+                                      "\n %s" % newList2[3],fg="#252850",bg="#FFC0CB",width="22",
+                                        font=("Century Gothic", "18","bold"))
         self.winnername.place(relx=0.70, rely=0.55, anchor='center')
         t = 0
         w=0
@@ -1891,7 +1903,66 @@ class ResultsSBFacultyWindow:
         self.list = root.place_slaves()
         for l in self.list:
             l.destroy()
-        self.third_window = ResultsWindow(self.master)
+        self.results_window = ResultsWindow(self.master)
+
+class ResultsSummaryWindow:
+    def __init__(self,master):
+        self.master = master
+        root.configure(background='#252850')
+        self.firstlabel= tk.Label(text="GSU ELECTIONS : Results", width="50", fg="#FFC0CB",bg="#252850", font=("Century Gothic", "55","bold"))
+        self.firstlabel.place(relx=0.5, rely=0.15, anchor='center')
+        self.secondlabel=tk.Label(text= "Summary", width="60", fg="white",bg="#252850", font=("Century Gothic", "30","bold","italic","underline"))
+        self.secondlabel.place(relx=0.5, rely=0.22, anchor='center')
+        self.presidentlbl = tk.Label(text="President", fg="#252850", bg="white", width=22,
+                                font=("Century Gothic", "23", "bold", "italic"))
+        self.presidentlbl.place(relx=0.25, rely=0.34, anchor='center')
+        self.presidentwinner = tk.Label(text=" %s," % newList[0] , fg="#252850", bg="#FFC0CB", width=35,
+                                 font=("Century Gothic", "18"))
+        self.presidentwinner.place(relx=0.7, rely=0.34, anchor='center')
+        self.GSUOlbl = tk.Label(text="GSU Officers", fg="#252850", bg="white", width=22,
+                              font=("Century Gothic", "23", "bold", "italic"))
+        self.GSUOlbl.place(relx=0.25, rely=0.46, anchor='center')
+        self.GSUwinner = tk.Label(text=" %s," % newList1[0] + " %s" % newList1[1] + "\n %s," % newList1[2],
+                                   fg="#252850", bg="#FFC0CB", width=35, font=("Century Gothic", "18"))
+        self.GSUwinner.place(relx=0.70, rely=0.46, anchor='center')
+        self.SBlbl = tk.Label(text="School of Business", fg="#252850", bg="white", width=22,
+                              font=("Century Gothic", "23", "bold", "italic"))
+        self.SBlbl.place(relx=0.25, rely=0.58, anchor='center')
+        self.SBwinner = tk.Label(text=" %s," % newList2[0] + " %s," % newList2[1] + "\n %s," % newList2[2] +
+                                        " %s," % newList2[3], fg="#252850", bg="#FFC0CB", width=35,
+                                   font=("Century Gothic", "18"))
+        self.SBwinner.place(relx=0.7, rely=0.58, anchor='center')
+        self.ASlbl = tk.Label(text="Faculty of Liberal Arts \n and Sciences", fg="#252850", bg="white", width=22,
+                              font=("Century Gothic", "23", "bold", "italic"))
+        self.ASlbl.place(relx=0.25, rely=0.68, anchor='center')
+        self.ASwinner = tk.Label(text=" %s," % newList5[0] + " %s," % newList5[1] + "\n %s," % newList5[2] +
+                                      " %s," % newList5[3], fg="#252850", bg="#FFC0CB", width=35,
+                                 font=("Century Gothic", "18" ))
+        self.ASwinner.place(relx=0.7, rely=0.68, anchor='center')
+        self.EHlbl = tk.Label(text="Faculty of Education", fg="#252850", bg="white", width=22,
+                              font=("Century Gothic", "23", "bold", "italic"))
+        self.EHlbl.place(relx=0.25, rely=0.78, anchor='center')
+        self.EHwinner = tk.Label(text=" %s," % newList4[0] + " %s," % newList4[1] + "\n %s," % newList4[2] +
+                                      " %s," % newList4[3], fg="#252850", bg="#FFC0CB", width=35,
+                                 font=("Century Gothic", "18"))
+        self.EHwinner.place(relx=0.7, rely=0.78, anchor='center')
+        self.ESlbl = tk.Label(text="Faculty of Engenieering \n and Science",fg="#252850", bg="white", width=22,
+                                 font=("Century Gothic", "23", "bold","italic"))
+        self.ESlbl.place(relx=0.25, rely=0.88, anchor='center')
+        self.ESwinner = tk.Label(text=" %s," % newList3[0] + " %s," % newList3[1] + "\n %s," % newList3[2] +
+                                      " %s," % newList3[3], fg="#252850", bg="#FFC0CB", width=35,
+                                 font=("Century Gothic", "18"))
+        self.ESwinner.place(relx=0.7, rely=0.88, anchor='center')
+        self.back = tk.Button(text='Back', font=("Gill Sans MT", "15", "bold"), height="1", width="9",
+                              command=self.go_back)
+        self.back.place(relx=0.92, rely=0.05, anchor="center")
+
+    def go_back(self):
+        self.list = root.place_slaves()
+        for l in self.list:
+            l.destroy()
+        self.results_window = ResultsWindow(self.master)
+
 
 if __name__ == '__main__':
     root = tk.Tk()
