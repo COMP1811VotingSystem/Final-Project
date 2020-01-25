@@ -273,7 +273,26 @@ count_faculty("ThirdPreference", faculty_results,
 count_faculty("FourthPreference", faculty_results,
               "fourth", as_faculty_names)
 
+count_faculty("FirstPreference", faculty_results,
+              "first", eh_faculty_names)
+count_faculty("SecondPreference", faculty_results,
+              "second", eh_faculty_names)
+count_faculty("ThirdPreference", faculty_results,
+              "third", eh_faculty_names)
+count_faculty("FourthPreference", faculty_results,
+              "fourth", eh_faculty_names)
+
+count_faculty("FirstPreference", faculty_results,
+              "first", es_faculty_names)
+count_faculty("SecondPreference", faculty_results,
+              "second", es_faculty_names)
+count_faculty("ThirdPreference", faculty_results,
+              "third", es_faculty_names)
+count_faculty("FourthPreference", faculty_results,
+              "fourth", es_faculty_names)
+
 # The below for loops print out the results from the voting.
+
 # PRESIDENT PART
 # In this part we create a txt file for all the candidates president with their respective votes
 list_president_votes = []
@@ -352,14 +371,17 @@ with open("OfficersResults", "r") as full_officers_detail:
             pk_winner_officer.insert(2, fk_winner_officer)
 
 full_officers_detail.close()
-# taking just the full name
+# taking the full name in a list
 newList1 = []
 for i in pk_winner_officer:
     newList1.append(i.split(':')[0])
-# appending the winner
+# appending the winners
 with open("OfficersResults", "a+") as OfficerWinner:
     OfficerWinner.write("\n" + "Winners are: " + newList1[0] + ", " + newList1[1] + ", " + newList1[2] + "\n")
+
+
 # In this part we create a txt file for all the candidates for each faculty with their respective votes
+
 # FACULTY SB PART
 list_faculty1_votes = []
 with open("FacultySBResults", "w") as TXTFacultySB:
