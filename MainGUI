@@ -1680,7 +1680,11 @@ class ResultsGSUW:
         c.execute("SELECT FirstPreference from GSUOfficerVotes")
         for row in c:
             t += 1
-            if newList1[0] or newList1[1] or newList1[2] in row:
+            if newList1[0] in row:
+                w += 1
+            elif newList1[1] in row:
+                w += 1
+            elif newList1[2] in row:
                 w += 1
         self.totalvotes = tk.Label(text="Total votes overall: %d" % t, width="18", fg="white", bg="#252850",
                                    font=("Century Gothic", "18"))
@@ -1734,11 +1738,18 @@ class ResultsASFacultyWindow:
         self.winnername.place(relx=0.77, rely=0.51, anchor='center')
         t = 0
         w = 0
-        c.execute("SELECT FirstPreference FROM FacultyOfficerVotes WHERE Faculty = 'AS'")
+        c.execute("SELECT FirstPreference FROM FacultyOfficerVotes WHERE Faculty = 'AS'") #check the amount of 1st preference votes the winner received
         for row in c:
             t += 1
-            if newList5[0] or newList5[1] or newList5[2] or newList5[3] in row:
+            if newList5[0] in row:
                 w += 1
+            elif newList5[1] in row:
+                w += 1
+            elif newList5[2] in row:
+                w += 1
+            elif newList5[3] in row:
+                w += 1
+
         self.totalvotes = tk.Label(text="Total votes overall: %d" % t, width="18", fg="white", bg="#252850",
                                    font=("Century Gothic", "18"))
         self.totalvotes.place(relx=0.5, rely=0.80, anchor='center')
@@ -1799,6 +1810,12 @@ class ResultsEHFacultyWindow:
         for row in c:
             t += 1
             if newList4[0] in row:
+                w += 1
+            elif newList4[1] in row:
+                w += 1
+            elif newList4[2] in row:
+                w += 1
+            elif newList4[3] in row:
                 w += 1
         self.totalvotes = tk.Label(text="Total votes overall: %d" % t, width="18", fg="white", bg="#252850",
                                    font=("Century Gothic", "18"))
@@ -1861,6 +1878,12 @@ class ResultsESFacultyWindow:
             t += 1
             if newList3[0] in row:
                 w += 1
+            elif newList3[1] in row:
+                w += 1
+            elif newList3[2] in row:
+                w += 1
+            elif newList3[3] in row:
+                w += 1
         self.totalvotes = tk.Label(text="Total votes overall: %d" % t, width="18", fg="white", bg="#252850",
                                    font=("Century Gothic", "18"))
         self.totalvotes.place(relx=0.5, rely=0.80, anchor='center')
@@ -1920,7 +1943,13 @@ class ResultsSBFacultyWindow:
         c.execute("SELECT FirstPreference FROM FacultyOfficerVotes WHERE Faculty = 'SB'")
         for row in c:
             t += 1
-            if newList3[0] in row:
+            if newList2[0] in row:
+                w += 1
+            elif newList2[1] in row:
+                w += 1
+            elif newList2[2] in row:
+                w += 1
+            elif newList2[3] in row:
                 w += 1
         self.totalvotes = tk.Label(text="Total votes overall: %d" % t, width="18", fg="white", bg="#252850",
                                    font=("Century Gothic", "18"))
