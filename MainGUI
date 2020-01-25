@@ -192,6 +192,8 @@ class SecondWindow:
                     if cuv < 3:
                         self.new_window()
                     else:
+                        self.password_entry.delete(0, "end")
+                        self.user_entry.delete(0, "end")
                         showinfo("Window", "You have already voted")
                 else:
                     self.valid_user = True
@@ -247,7 +249,7 @@ class ThirdWindow:
         for l in self.list:
             l.destroy()
 
-        self.signout_window = SecondWindow(self.master)
+        self.signout_window = SignOutWindow(self.master)
 
     def vote_president(self):
         global presidential_votes
@@ -292,6 +294,40 @@ class ThirdWindow:
                 self.sb_faculty_window = FacultyWindowSB(self.master)
         else:
             showinfo("window", "You cannot vote for this position again. Please try another position")
+
+
+class SignOutWindow:
+
+    def __init__(self, master):
+        self.master = master
+
+        self.thank_you = tk.Label(text="Thank you!", bg="white",
+                                     fg="black", width="40", height=1, font=("Georgia", "32", "bold", "italic"))
+        self.thank_you.place(relx=0.5, rely=0.10, anchor="center")
+        self.label = tk.Label(text="For entering the GSU Voting System",
+                              bg="white",
+                              fg="black", width="40", height=1, font=("Georgia", "32", "bold", "italic"))
+        self.label.place(relx=0.5, rely=0.17, anchor="center")
+        self.info_label = tk.Label(text="If you are another student who would like to vote,",
+                                   bg="white",
+                                   fg="black", width="50", height="1",
+                                   font=("Georgia", "20", "bold", "italic"))
+        self.info_label.place(relx=0.5, rely=0.44, anchor="center")
+        self.info_label_two = tk.Label(text="please close this program and login again to vote correctly.",
+                                       bg="white",
+                                       fg="black", width="50", height="1",
+                                       font=("Georgia", "20", "bold", "italic"))
+        self.info_label_two.place(relx=0.5, rely=0.485, anchor="center")
+        self.quit_button = tk.Button(text="Quit", font=("Gill Sans MT", "12", "bold"), height="2", width=15, command=self.close_window)
+        self.quit_button.place(relx=0.5, rely=0.65, anchor="center")
+        # logo GSU
+        self.logo4 = Image.open("logogsu.png")
+        self.logorender4 = ImageTk.PhotoImage(self.logo4)
+        self.main_label2 = tk.Label(image=self.logorender4)
+        self.main_label2.place(relx=0.85, rely=0.90, anchor="center")
+
+    def close_window(self):
+        self.master.destroy()
 
 
 class PresidentWindow:
