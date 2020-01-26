@@ -336,7 +336,10 @@ for row in c:
     t += 1
     if newList[0] in row:
         w += 1
-p = (w * 100) / t
+if t != 0:
+    p = (w * 100) / t
+else:
+    p = 0
 
 with open("PresidentResults", "a+") as PresidentWinner:
     PresidentWinner.write("\n" + "Winner: " + newList[0] + "\n" + "Total votes overall: " + str(t) + "\n" +
@@ -399,7 +402,12 @@ for row in c:
         w += 1
     elif newList1[2] in row:
         w += 1
-p = (w * 100) / t
+
+if t != 0:
+    p = (w * 100) / t
+else:
+    p = 0
+
 with open("OfficersResults", "a+") as OfficerWinner:
     OfficerWinner.write("\n" + "Winners are: " + newList1[0] + ", " + newList1[1] + ", " + newList1[
         2] + "\n" + "Total votes overall: " + str(t) + "\n" +
@@ -471,7 +479,12 @@ for row in c:
         w += 1
     elif newList2[3] in row:
         w += 1
-p = (w * 100) / t
+
+if t != 0:
+    p = (w * 100) / t
+else:
+    p = 0
+
 with open("FacultySBResults", "a+") as FacultySBWinner:
     FacultySBWinner.write(
         "\n" + "Winner: " + newList2[0] + ", " + newList2[1] + ", " + newList2[2] + ", " + newList2[3] + "\n" +
@@ -541,7 +554,13 @@ for row in c:
         w += 1
     elif newList3[3] in row:
         w += 1
-p = (w * 100) / t
+
+if t != 0:
+    p = (w * 100) / t
+else:
+    p = 0
+
+
 with open("FacultyESResults", "a+") as FacultyESWinner:
     FacultyESWinner.write(
         "\n" + "Winner: " + newList3[0] + ", " + newList3[1] + ", " + newList3[2] + ", " + newList3[3] + "\n" +
@@ -611,7 +630,12 @@ for row in c:
         w += 1
     elif newList4[3] in row:
         w += 1
-p = (w * 100) / t
+
+if t != 0:
+    p = (w * 100) / t
+else:
+    p = 0
+
 with open("FacultyEHResults", "a+") as FacultyEHWinner:
     FacultyEHWinner.write(
         "\n" + "Winner: " + newList4[0] + ", " + newList4[1] + ", " + newList4[2] + ", " + newList4[3] + "\n" +
@@ -640,7 +664,8 @@ with open("FacultyASResults", "w") as TXTFacultyAS:
     TXTFacultyAS.write("------------------------------------------------------------------------------" + "\n")
 
 list_faculty4_votes.sort(reverse=True)
-# we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
+# we are giving the first index of the previews list to
+# a variable and we check if that variable is in the txt file with all the votes
 data0 = (list_faculty4_votes[0])
 data1 = (list_faculty4_votes[1])
 data2 = (list_faculty4_votes[2])
@@ -670,8 +695,9 @@ for i in pk_winner_facultyAS:
 # appending the winners, score, tot vote and percentage
 t = 0
 w = 0
+# check the amount of 1st preference votes the winner received
 c.execute(
-    "SELECT FirstPreference FROM FacultyOfficerVotes WHERE Faculty = 'AS'")  # check the amount of 1st preference votes the winner received
+    "SELECT FirstPreference FROM FacultyOfficerVotes WHERE Faculty = 'AS'")
 for row in c:
     t += 1
     if newList5[0] in row:
@@ -682,7 +708,12 @@ for row in c:
         w += 1
     elif newList5[3] in row:
         w += 1
-p = (w * 100) / t
+
+if t != 0:
+    p = (w * 100) / t
+else:
+    p = 0
+
 
 with open("FacultyASResults", "a+") as FacultyASWinner:
     FacultyASWinner.write(
