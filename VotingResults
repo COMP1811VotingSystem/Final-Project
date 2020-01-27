@@ -722,3 +722,12 @@ with open("FacultyASResults", "a+") as FacultyASWinner:
         "Votes the winners received: " + str(
             w) + "\n" + "Percentage of votes received by the winners: " +
         str(p) + "\n")
+        
+with open("SummaryWinners", "w") as Summary:
+    Summary.write("Summary " + "\n" + "President: " + newList[0] + "\n" + "---------------------------" + "\n" + "GSUOfficers: "
+                  + newList1[0] + ", " + newList1[1] + ", " + newList1[
+                      2] + "\n" + "---------------------------" + "\n" + "Faculty AS: " + newList5[0] + ", " + newList5[1] + ", " + newList5[2] + ", " + newList5[
+            3] + "\n" + "---------------------------" + "\n" + "Faculty ES: " + newList3[0] + ", " + newList3[1] + ", " + newList3[2] + ", " + newList3[3] + "\n"
+                  + "---------------------------" + "\n" + "Faculty EH: " + newList4[0] + ", " + newList4[1] + ", " + newList4[2] + ", " + newList4[3] + "\n"
+                  + "---------------------------" + "\n" + "Faculty SB: " + newList2[0] + ", " + newList2[1] + ", " + newList2[2] + ", " + newList2[3] + "\n")
+                  
