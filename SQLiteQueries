@@ -33,7 +33,7 @@ def save_president_votes(conn, info):
 
 
 def president_main(username, first_pref, second_pref=None, third_pref=None, fourth_pref=None):
-    database = r"C:\Users\qazol\PycharmProjects\VotingSystem3\VotingDatabase3.db"
+    database = r"C:\Users\qazol\PycharmProjects\VotingSystem3\VotingDatabase.db"
     conn = create_connection(database)
 
     with conn:
@@ -57,7 +57,7 @@ def save_faculty_votes(conn, info):
 
 
 def faculty_main(faculty, username, first_pref, second_pref=None, third_pref=None, fourth_pref=None):
-    database = r"C:\Users\qazol\PycharmProjects\VotingSystem3\VotingDatabase3.db"
+    database = r"C:\Users\qazol\PycharmProjects\VotingSystem3\VotingDatabase.db"
     conn = create_connection(database)
 
     with conn:
@@ -82,7 +82,7 @@ def save_officer_votes(conn, info):
 
 
 def officer_main(username, first_pref, second_pref=None, third_pref=None, fourth_pref=None):
-    database = r"C:\Users\qazol\PycharmProjects\VotingSystem3\VotingDatabase3.db"
+    database = r"C:\Users\qazol\PycharmProjects\VotingSystem3\VotingDatabase.db"
     conn = create_connection(database)
 
     with conn:
