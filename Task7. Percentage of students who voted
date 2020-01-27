@@ -1,0 +1,14 @@
+import sqlite3
+
+conn = sqlite3.connect("VotingDatabase.db")
+c = conn.cursor()
+c.execute("SELECT * FROM PresidentVotes")
+num_stud = 0
+for x in c:
+    num_stud += 1
+
+if x != 0:
+    p = (num_stud * 100) / 20
+else:
+    p = 0
+print(p, "%")
