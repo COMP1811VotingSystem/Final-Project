@@ -13,6 +13,9 @@ faculty_results = []
 
 # Abstract class used as for inheritance into each position class shown below.
 class CandidateResults(ABC):
+    """
+       Is an abstract class with every attributes that a candidate will have
+    """
     def __init__(self, full_name, faculty, first=0, second=0, third=0, fourth=0):
         self.full_name = full_name
         self.faculty = faculty
@@ -23,6 +26,9 @@ class CandidateResults(ABC):
 
 
 class PresidentResults(CandidateResults):
+    """
+      Inherit from CandidateResults class and stores in integer value the vote for the PresidetResults
+    """
     def __init__(self, full_name, faculty, first=0, second=0, third=0, fourth=0):
         super().__init__(full_name, faculty, first, second, third, fourth)
 
@@ -321,6 +327,7 @@ with open("PresidentResults", "w") as TXTPresident:
     TXTPresident.write(
         "  Candidate   " + "  1st Preference " + " 2nd Preference " + " 3rd Preference " + " 4th Preference " + "\n")
     TXTPresident.write("  ---------     --------------  --------------  --------------  --------------" + "\n")
+        # For loop to write all the detail for every single candidate
     for x in president_results:
         TXTPresident.write(x.full_name + ":" + str(x.first) + "," + str(x.second) + "," + str(x.third) + "," + str(
             x.fourth) + "\n")
@@ -330,12 +337,14 @@ with open("PresidentResults", "w") as TXTPresident:
                 x.fourth))
     TXTPresident.write("------------------------------------------------------------------------------" + "\n")
 
+# sort the list that we can have the highest vote at the beginning
 list_president_votes.sort(reverse=True)
 
 # we are giving the first index of the previews list to a variable and we check if that variable is in the txt file with all the votes
 data = (list_president_votes[0])
 fk_winner_president = ""
 pk_winner_president = []
+# chech in whitch line the winner is in and we append the entire line to a list
 with open("PresidentResults", "r") as full_president_detail:
     for line in full_president_detail:
         if data in line:
@@ -347,18 +356,22 @@ newList = []
 for i in pk_winner_president:
     newList.append(i.split(':')[0])
 # appending the winner, score, tot vote and percentage
-t = 0
-w = 0
+t = 0 # counter for the total votes
+w = 0 # counter for the winner/s
 c.execute("SELECT FirstPreference from PresidentVotes")
+#for loop that count how many time the winner name is in the database
 for row in c:
     t += 1
+    #separate counter for the winner
     if newList[0] in row:
         w += 1
+#calculation of the percentage
 if t != 0:
     p = (w * 100) / t
 else:
     p = 0
-
+    
+#appending the winner name, tot votes, votes received and percentage
 with open("PresidentResults", "a+") as PresidentWinner:
     PresidentWinner.write("\n" + "Winner: " + newList[0] + "\n" + "Total votes overall: " + str(t) + "\n" +
                           "Votes the winner received: " + str(
