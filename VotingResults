@@ -28,11 +28,17 @@ class PresidentResults(CandidateResults):
 
 
 class OfficerResults(CandidateResults):
+    """
+    Inherits from the CandidateResults class and stores integer values of the votes for the officer candidates
+    """
     def __init__(self, full_name, faculty, first=0, second=0, third=0, fourth=0):
         super().__init__(full_name, faculty, first, second, third, fourth)
 
 
 class FacultyResults(CandidateResults):
+    """
+    Inherits from the CandidateResults class and stores integer values of the votes for the faculty candidates
+    """
     def __init__(self, full_name, faculty, first=0, second=0, third=0, fourth=0):
         super().__init__(full_name, faculty, first, second, third, fourth)
 
@@ -51,6 +57,10 @@ for x in c:
 
 
 def count_president(sql_one, sql_two, voting_list, attr, president_list):
+    """
+    Function Queries from our SQLite database and counts the number of votes each candidate receives
+    Data is then stored within the relevant voting lists as integer values
+    """
     counter_dict = {"counter1": 0, "counter2": 0, "counter3": 0, "counter4": 0}
 
     if sql_two == "PresidentVotes":
@@ -79,6 +89,10 @@ def count_president(sql_one, sql_two, voting_list, attr, president_list):
 
 
 def count_officer(sql_one, sql_two, voting_list, attr, officer_list):
+    """
+    Function Queries from our SQLite database and counts the number of votes each candidate receives
+    Data is then stored within the relevant voting lists as integer values
+    """
     counter_dict = {"counter1": 0, "counter2": 0, "counter3": 0, "counter4": 0,
                     "counter5": 0, "counter6": 0, "counter7": 0, "counter8": 0,
                     "counter9": 0, "counter10": 0, "counter11": 0, "counter12": 0}
@@ -148,6 +162,10 @@ def count_officer(sql_one, sql_two, voting_list, attr, officer_list):
 
 
 def count_faculty(sql_one, voting_list, attr, faculty_names):
+    """
+    Function Queries from our SQLite database and counts the number of votes each candidate receives
+    Data is then stored within the relevant voting lists as integer values
+    """
     counter_dict = {"counter1": 0, "counter2": 0, "counter3": 0, "counter4": 0,
                     "counter5": 0, "counter6": 0, "counter7": 0, "counter8": 0,
                     "counter9": 0, "counter10": 0, "counter11": 0, "counter12": 0,
@@ -722,12 +740,3 @@ with open("FacultyASResults", "a+") as FacultyASWinner:
         "Votes the winners received: " + str(
             w) + "\n" + "Percentage of votes received by the winners: " +
         str(p) + "\n")
-        
-with open("SummaryWinners", "w") as Summary:
-    Summary.write("Summary " + "\n" + "President: " + newList[0] + "\n" + "---------------------------" + "\n" + "GSUOfficers: "
-                  + newList1[0] + ", " + newList1[1] + ", " + newList1[
-                      2] + "\n" + "---------------------------" + "\n" + "Faculty AS: " + newList5[0] + ", " + newList5[1] + ", " + newList5[2] + ", " + newList5[
-            3] + "\n" + "---------------------------" + "\n" + "Faculty ES: " + newList3[0] + ", " + newList3[1] + ", " + newList3[2] + ", " + newList3[3] + "\n"
-                  + "---------------------------" + "\n" + "Faculty EH: " + newList4[0] + ", " + newList4[1] + ", " + newList4[2] + ", " + newList4[3] + "\n"
-                  + "---------------------------" + "\n" + "Faculty SB: " + newList2[0] + ", " + newList2[1] + ", " + newList2[2] + ", " + newList2[3] + "\n")
-                  
