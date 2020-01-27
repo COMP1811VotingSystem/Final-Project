@@ -13,8 +13,7 @@ c.execute("""CREATE TABLE IF NOT EXISTS Student (
                 )""")
 c.execute("""CREATE TABLE IF NOT EXISTS Candidate (
                 Forename TEXT NOT NULL, Surname TEXT NOT NULL, Position TEXT NOT NULL, Faculty TEXT NOT NULL,
-                CandidateUsername TEXT PRIMARY KEY NOT NULL, Gender INTEGER NOT NULL, YearGroup INTEGER NOT NULL
-                )""")
+                CandidateUsername TEXT PRIMARY KEY NOT NULL, Gender INTEGER NOT NULL, YearGroup INTEGER NOT NULL)""")
 c.execute("""CREATE TABLE IF NOT EXISTS PresidentVotes (
                 id INTEGER PRIMARY KEY, StudentUsername TEXT NOT NULL, FirstPreference TEXT NOT NULL,
                 SecondPreference TEXT, ThirdPreference TEXT, FourthPreference TEXT
@@ -43,18 +42,18 @@ c.execute("""INSERT OR IGNORE INTO Student VALUES('Ronny','Diaz', 'rd2034h', 'Ro
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Tre','Hawes', 'th2034w', 'TreHawes98', 'EH', 'M', 1)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Gabriele','Qazolli', 'a', 'a', 'SB', 'M', 2)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Maddie','Barnett', 'mb3520e', 'PasswordBarnett', 'SB', 'F', 2)""")
-c.execute("""INSERT OR IGNORE INTO Student VALUES('Hannah','Quintero', 'hq3984e', '123Password', 'SB', 'F', 1)""")
+c.execute("""INSERT OR IGNORE INTO Student VALUES('Hannah','Quintero', 'hq3984e', '123Password', 'SB', 'F', 1)""")#not voted yet
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Naya','Ayala', 'na3084e', 'NayaAyala', 'SB', 'F', 3)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Melinda','Mcneil', 'mm4927s', 'Melinda2000', 'SB', 'F', 2)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Rebecca','Shaw', 'rs4927g', 'BeckyShaw', 'ES', 'F', 1)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Anya','Elsom', 'ae4028y', 'ElsomAnya', 'ES', 'F', 2)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Zain','Gillespie', 'zg4973d', 'GreenwichPass', 'ES', 'M', 3)""")
-c.execute("""INSERT OR IGNORE INTO Student VALUES('Adnan','Allirakiah', 'aa9038y', 'AdnanAdnan', 'ES', 'M', 1)""")
+c.execute("""INSERT OR IGNORE INTO Student VALUES('Adnan','Allirakiah', 'aa9038y', 'AdnanAdnan', 'ES', 'M', 1)""")#not voted yet
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Connor','Ryan', 'cr3928t', 'ConnorPass', 'ES', 'M', 2)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Fabrizio','Valentine', 'fv5938e', 'FabVal', 'AS', 'M', 3)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Jevon','Corrighan', 'jc8495r', 'PasswordPassword', 'AS', 'M', 1)""")
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Brandon','Stein', 'bs0382t', 'SteinBrandon', 'AS', 'M', 2)""")
-c.execute("""INSERT OR IGNORE INTO Student VALUES('Adrian','Stephens', 'as7513f', 'StephenAdrians', 'AS', 'M', 3)""")
+c.execute("""INSERT OR IGNORE INTO Student VALUES('Adrian','Stephens', 'as7513f', 'StephenAdrians', 'AS', 'M', 3)""")#not voted yet
 c.execute("""INSERT OR IGNORE INTO Student VALUES('Rosie','Merritt', 'rm9841r', 'GSUPassword98', 'AS', 'F', 2)""")
 
 # Adding 4 Presidents & 12 GSU Officers to Candidate Table
