@@ -1,3 +1,4 @@
+#HACKATHON CHALLENGE TASK 4- MARIANA VILLAR
 president_votes = [['Alan Smith', 90], ['Zishan Noor', 11], ['James Martin', 90], ['Lizzy Jones',10]]
 highest_vote = 0  # This variable will only save the highest number of votes in the list
 draw = 0  # Checks if there is a draw
