@@ -1,0 +1,17 @@
+president_votes = [['Alan Smith', 90], ['Zishan Noor', 11], ['James Martin', 90], ['Lizzy Jones',10]]
+highest_vote = 0  # This variable will only save the highest number of votes in the list
+draw = 0  # Checks if there is a draw
+
+# For loop that checks every index 2 of the items of the list
+for i in president_votes:
+    # If condition that saves the highest number of votes and checks if it appears again
+    if i[1] > highest_vote:
+        highest_vote = i[1]  # Saves the highest number of votes a candidate had
+    elif i[1] == highest_vote:
+        draw = 1    # If there is a draw, it becomes 1(true)
+        break
+
+if draw:
+    print('True')  # There is a draw
+else:
+    print('False')
